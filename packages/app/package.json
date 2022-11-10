@@ -1,0 +1,13 @@
+{
+  "name": "simple-voice-recorder-app",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "@capacitor/cli": "^4.4.0"
+  },
+  "dependencies": {
+    "@capacitor/android": "^4.4.0",
+    "@capacitor/core": "^4.4.0",
+    "@capacitor/ios": "^4.4.0"
+  }
+}
