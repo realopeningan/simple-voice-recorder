@@ -2,6 +2,10 @@
   "name": "simple-voice-recorder-app",
   "version": "1.0.0",
   "license": "MIT",
+  "scripts": {
+    "dev:android": "npx cap sync && npx cap run open",
+    "dev:ios": "npx cap sync && npx cap run ios"
+  },
   "devDependencies": {
     "@capacitor/cli": "^4.4.0"
   },

@@ -1,0 +1,11 @@
+{
+  "name": "simple-voice-recorder",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "install": "yarn --cwd packages/web install && yarn --cwd packages/web static",
+    "dev:android": "yarn --cwd packages/web static && yarn --cwd packages/app dev:android",
+    "dev:ios": "yarn --cwd packages/web static && yarn --cwd packages/app dev:ios",
+    "dev:web": "yarn --cwd packages/web dev"
+  }
+}
