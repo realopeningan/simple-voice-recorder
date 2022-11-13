@@ -83,9 +83,9 @@ function Home() {
     <div>
       <h1 className='title'>Voice Recorder</h1>
       <Box sx={{ '& button': { m: 1 }, 'display': 'flex', 'flexDirection': 'column'}}>
-        <Button variant="contained" onClick={startRecording}>Recording Start</Button>
-        <Button variant="contained" onClick={stopRecording}>Recording Stop</Button>
-        <Button variant="contained" onClick={pauseRecording}>Recording Pause</Button>
+        <Button variant="contained" onClick={startRecording}>Recording Start 1</Button>
+        <Button variant="contained" onClick={stopRecording}>Recording Stop 2</Button>
+        <Button variant="contained" onClick={pauseRecording}>Recording Pause 3</Button>
         <Button variant="contained" onClick={resumeRecording}>Recording Resume</Button>
         <Button variant="outlined" onClick={playRecording}>Playing</Button>
         <Button variant="outlined" onClick={getStatus}>GetStatus</Button>

@@ -4,10 +4,10 @@
   "license": "MIT",
   "scripts": {
     "sync": "npx cap sync",
-    "dev:android": "export STAGE=dev && yarn sync && npx cap run open",
+    "dev:android": "export STAGE=dev && yarn sync && npx cap open android",
     "dev:ios": "export STAGE=dev && yarn sync && npx cap run ios",
-    "prod:android":  "export STAGE=prod && yarn sync && npx cap run open",
-    "prod:ios": "export STAGE=prod && yarn sync && npx cap run ios"
+    "prod:android": "export STAGE=prod && yarn sync && npx cap open android",
+    "prod:ios": "export STAGE=prod && yarn sync && npx cap open ios"
   },
   "devDependencies": {
     "@capacitor/cli": "^4.4.0"
