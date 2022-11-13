@@ -4,7 +4,8 @@ const nextConfig = {
   swcMinify: true,
   images:{
 	unoptimized: true
-  }
+  },
+  basePath: "/simple-voice-recorder/"
 }
 
 module.exports = nextConfig
