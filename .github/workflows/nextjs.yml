@@ -63,6 +63,8 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} yarn install
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} yarn static
+      - name: check currnet folder
+        run: pwd
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
