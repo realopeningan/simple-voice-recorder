@@ -5,7 +5,7 @@ const nextConfig = {
   images:{
 	unoptimized: true
   },
-  basePath: "/simple-voice-recorder/"
+  basePath: '/simple-voice-recorder'
 }
 
 module.exports = nextConfig
