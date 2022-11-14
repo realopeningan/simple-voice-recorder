@@ -5,7 +5,7 @@
   "scripts": {
     "sync": "yarn install && npx cap sync",
     "dev:android": "export STAGE=dev && yarn sync && npx cap open android",
-    "dev:ios": "export STAGE=dev && yarn sync && npx cap run ios",
+    "dev:ios": "export STAGE=dev && yarn sync && npx cap open ios",
     "prod:android": "export STAGE=prod && yarn sync && npx cap open android",
     "prod:ios": "export STAGE=prod && yarn sync && npx cap open ios"
   },
