@@ -2,10 +2,10 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const stage = process.env.STAGE
 
-let url= 'http://localhost:3000'
+let url= 'http://0.0.0.0:3000'
 switch(stage){
   case 'dev':
-    url = 'http://localhost:3000'
+    url = 'http://192.168.0.4:3000/simple-voice-recorder'
     break
   case 'prod':
     url = 'https://realopeningan.github.io/simple-voice-recorder'
@@ -24,6 +24,7 @@ const config: CapacitorConfig = {
   bundledWebRuntime: false,
 	server: {
 		url,
+    cleartext: true
 	}
 };
 

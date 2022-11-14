@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "install": "yarn --cwd packages/web install && yarn --cwd packages/web static",
-    "dev:android": "yarn --cwd packages/web static && yarn --cwd packages/app dev:android",
-    "dev:ios": "yarn --cwd packages/web static && yarn --cwd packages/app dev:ios",
+    "dev:android": "yarn --cwd packages/web static && yarn --cwd packages/app dev:android && yarn --cwd ./packages/web dev",
+    "dev:ios": "yarn --cwd packages/web static && yarn --cwd packages/app dev:ios && yarn --cwd ./packages/web dev",
     "dev:web": "yarn --cwd packages/web dev",
     "prod:android": "yarn --cwd packages/web static && yarn --cwd packages/app prod:android",
     "prod:ios": "yarn --cwd packages/web static && yarn --cwd packages/app prod:ios"
