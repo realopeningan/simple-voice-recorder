@@ -10,11 +10,19 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { StyledEngineProvider } from '@mui/material/styles';
 //import { css } from '@emotion/react'
-import styled from '@emotion/styled'
+//import styled from '@emotion/styled'
 import { css } from '@emotion/css'
 import MicNoneTwoToneIcon from '@mui/icons-material/MicNoneTwoTone';
 import AdjustIcon from '@mui/icons-material/Adjust';
-import { Icon, IconButton, List, ListItem, ListItemText } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import { styled } from '@mui/material/styles';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
+import MoreIcon from '@mui/icons-material/MoreVert';
+
+import { AppBar, createTheme, Icon, IconButton, List, ListItem, ListItemText, ThemeProvider, Toolbar, Typography } from '@mui/material';
+import { orange } from '@mui/material/colors';
 function Home() {
 
 	const [base64Sound, setBase64Sound] = useState<undefined|string>(undefined)
@@ -95,69 +103,104 @@ function Home() {
   }
 
   const color = 'white'
+  const div1Style=css`
+    display: flex;
+    flex-direction: column;
+    height: 100vh
+  `
+  const div2Style=css`
+    padding: 10px;
+    background-color: #B0BEC5;
+    font-size: 24px;
+    height: 5%;
+    &:hover {
+      color: ${color};
+    }
+  `
+  const div3Style=css`
+    padding: 10px;
+    height: 80%;
+  `
+  const div4Style=css`
+    padding: 10px;
+    background-color: #F5F5F5;
+    height: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `
+
+  const StyledFab = styled(Fab)({
+    position: 'absolute',
+    zIndex: 1,
+    top: '50%',
+    left: 0,
+    right: 0,
+    margin: '0 auto'
+  });
+
+  let theme = createTheme({
+    palette: {
+      primary: {
+        main: '#f5f5f5',
+      },
+      secondary: {
+        main: '#fafafa',
+      },
+    },
+  });
 
   return (
-    <div className={css`
-      display: flex;
-      flex-direction: column;
-      height: 100vh
-    `}>
-      <div
-        className={css`
-          padding: 10px;
-          background-color: #B0BEC5;
-          font-size: 24px;
-          height: 5%;
-          &:hover {
-            color: ${color};
-          }
-        `}
-      >
-        Simple Voice Recorder
-      </div>
-      <div
-        className={css`
-          padding: 10px;
-          height: 80%;
-        `}>
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-          <ListItem>
-            <ListItemText primary="Sample1" secondary="Jan 9, 2014" onClick={playRecording}/>
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Sample2" secondary="Jan 7, 2014" />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Sample3" secondary="July 20, 2014" />
-          </ListItem>
-        </List>
-      </div>
-      <div
-        className={css`
-          padding: 10px;
-          background-color: #F5F5F5;
-          height: 15%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        `}
-        >
-        <div onClick={btnClick}>
-          <IconButton aria-label="mic" disabled color="primary">
-            {nowRecording?<AdjustIcon sx={{ fontSize: 60}}/>:<MicNoneTwoToneIcon sx={{ fontSize: 60}}/>}
-          </IconButton>
-        </div>
-      </div>
-      {/* <Box sx={{ '& button': { m: 1 }, 'display': 'flex', 'flexDirection': 'column'}}>
-        <Button variant="contained" onClick={startRecording}>Recording Start 1</Button>
-        <Button variant="contained" onClick={stopRecording}>Recording Stop 2</Button>
-        <Button variant="contained" onClick={pauseRecording}>Recording Pause 3</Button>
-        <Button variant="contained" onClick={resumeRecording}>Recording Resume</Button>
-        <Button variant="outlined" onClick={playRecording}>Playing</Button>
-        <Button variant="outlined" onClick={getStatus}>GetStatus</Button>
-      </Box> */}
+    <ThemeProvider theme={theme}>
 
-    </div>
+      <div className={div1Style}>
+        <div className={div2Style}>
+        </div>
+        <AppBar sx={{height: '5%'}} elevation={0}>
+          <Toolbar variant="dense">
+            <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" component="div">
+              VoiceR
+            </Typography>
+          </Toolbar>
+        </AppBar>
+
+        <div
+          className={div3Style}>
+          <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            <ListItem>
+              <ListItemText primary="Sample1" secondary="Jan 9, 2014" onClick={playRecording}/>
+            </ListItem>
+            <ListItem>
+              <ListItemText primary="Sample2" secondary="Jan 7, 2014" />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary="Sample3" secondary="July 20, 2014" />
+            </ListItem>
+          </List>
+        </div>
+        <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0, height: '15%' }}>
+          <Toolbar>
+            <StyledFab size="large" color="secondary" aria-label="add" onClick={btnClick}>
+              <IconButton aria-label="mic" disabled color="primary">
+                {nowRecording?<AdjustIcon sx={{ fontSize: 40}}/>:<MicNoneTwoToneIcon sx={{ fontSize: 40}}/>}
+              </IconButton>
+            </StyledFab>
+          </Toolbar>
+        </AppBar>
+        {/* <Box sx={{ '& button': { m: 1 }, 'display': 'flex', 'flexDirection': 'column'}}>
+          <Button variant="contained" onClick={startRecording}>Recording Start 1</Button>
+          <Button variant="contained" onClick={stopRecording}>Recording Stop 2</Button>
+          <Button variant="contained" onClick={pauseRecording}>Recording Pause 3</Button>
+          <Button variant="contained" onClick={resumeRecording}>Recording Resume</Button>
+          <Button variant="outlined" onClick={playRecording}>Playing</Button>
+          <Button variant="outlined" onClick={getStatus}>GetStatus</Button>
+        </Box> */}
+
+      </div>
+    </ThemeProvider>
   )
 }
 
