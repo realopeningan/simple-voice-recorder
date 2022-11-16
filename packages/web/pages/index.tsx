@@ -159,7 +159,7 @@ function Home() {
           height: '5%',
           paddingTop: 'env(safe-area-inset-top)',
           paddingLeft: `env(safe-area-inset-left)`,
-          paddingLeft: `env(safe-area-inset-left)`,
+          paddingRight: `env(safe-area-inset-right)`
          }} elevation={0}>
           <Toolbar variant="dense">
             <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
