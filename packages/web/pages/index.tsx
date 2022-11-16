@@ -155,7 +155,12 @@ function Home() {
       <div className={div1Style}>
         <div className={div2Style}>
         </div>
-        <AppBar sx={{height: '5%', paddingTop: 'env(safe-area-inset-top)'}} elevation={0}>
+        <AppBar sx={{
+          height: '5%',
+          paddingTop: 'env(safe-area-inset-top)',
+          paddingLeft: `env(safe-area-inset-left)`,
+          paddingLeft: `env(safe-area-inset-left)`,
+         }} elevation={0}>
           <Toolbar variant="dense">
             <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
               <MenuIcon />
