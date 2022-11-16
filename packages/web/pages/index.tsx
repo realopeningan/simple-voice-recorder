@@ -21,7 +21,7 @@ import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
-import { AppBar, createTheme, Icon, IconButton, List, ListItem, ListItemText, ThemeProvider, Toolbar, Typography } from '@mui/material';
+import { AppBar, createTheme, Icon, IconButton, List, ListItem, ListItemText, makeStyles, ThemeProvider, Toolbar, Typography } from '@mui/material';
 import { orange } from '@mui/material/colors';
 function Home() {
 
@@ -152,11 +152,10 @@ function Home() {
 
   return (
     <ThemeProvider theme={theme}>
-
       <div className={div1Style}>
         <div className={div2Style}>
         </div>
-        <AppBar sx={{height: '5%'}} elevation={0}>
+        <AppBar sx={{height: '5%', paddingTop: 'env(safe-area-inset-top)'}} elevation={0}>
           <Toolbar variant="dense">
             <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
               <MenuIcon />
@@ -184,9 +183,7 @@ function Home() {
         <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0, height: '15%' }}>
           <Toolbar>
             <StyledFab size="large" color="secondary" aria-label="add" onClick={btnClick}>
-              <IconButton aria-label="mic" disabled color="primary">
-                {nowRecording?<AdjustIcon sx={{ fontSize: 40}}/>:<MicNoneTwoToneIcon sx={{ fontSize: 40}}/>}
-              </IconButton>
+              {nowRecording?<AdjustIcon sx={{ fontSize: 40}}/>:<MicNoneTwoToneIcon sx={{ fontSize: 40}}/>}
             </StyledFab>
           </Toolbar>
         </AppBar>
