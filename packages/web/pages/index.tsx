@@ -112,22 +112,10 @@ function Home() {
     padding: 10px;
     background-color: #B0BEC5;
     font-size: 24px;
-    height: 5%;
+    height: 10%;
     &:hover {
       color: ${color};
     }
-  `
-  const div3Style=css`
-    padding: 10px;
-    height: 80%;
-  `
-  const div4Style=css`
-    padding: 10px;
-    background-color: #F5F5F5;
-    height: 15%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   `
 
   const StyledFab = styled(Fab)({
@@ -153,15 +141,15 @@ function Home() {
   return (
     <ThemeProvider theme={theme}>
       <div className={div1Style}>
-        <div className={div2Style}>
-        </div>
+        <div className={div2Style}/>
         <AppBar sx={{
-          height: '5%',
+          height: '10%',
+          position: 'fixed',
           paddingTop: 'env(safe-area-inset-top)',
           paddingLeft: `env(safe-area-inset-left)`,
           paddingRight: `env(safe-area-inset-right)`
          }} elevation={0}>
-          <Toolbar variant="dense">
+          <Toolbar sx={{height: '100%'}} variant="dense">
             <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
               <MenuIcon />
             </IconButton>
@@ -172,8 +160,8 @@ function Home() {
         </AppBar>
 
         <div
-          className={div3Style}>
-          <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+          className={css`height:75%`}>
+          <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', position: 'fixed'}}>
             <ListItem>
               <ListItemText primary="Sample1" secondary="Jan 9, 2014" onClick={playRecording}/>
             </ListItem>
