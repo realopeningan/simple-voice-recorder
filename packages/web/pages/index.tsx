@@ -22,13 +22,13 @@ function Home() {
 	const [base64Sound, setBase64Sound] = useState<undefined|string>(undefined)
   const [nowRecording, setNowRecording] = useState(false)
   const [recordingfiles, setRecordingFiles] = useState<FileInfo[]>([])
+  const [firstLoad, setFirstLoad] = useState(true)
 
   const savedFolder = 'voiceR/files/'
   const savedDirType = Directory.Data
 
   useEffect(()=>{
     try{
-      readDir()
       VoiceRecorder.canDeviceVoiceRecord().then(
         (result: GenericResponse) => console.log(result.value)
       )
@@ -40,14 +40,18 @@ function Home() {
       VoiceRecorder.hasAudioRecordingPermission().then(
         (result: GenericResponse) => console.log(result.value)
       )
-
-      Filesystem.requestPermissions().then(
-        (result: any) => console.log(result)
-      )
     }catch(e){
       console.log("error", e)
     }
   }, [])
+
+  useEffect(()=>{
+    if(firstLoad === true){
+      setFirstLoad(false)
+      console.log("### call readDir")
+      readDir()
+    }
+  }, [firstLoad])
 
   const btnClick = () =>{
     console.log("click btn")
@@ -132,27 +136,35 @@ function Home() {
     },
   });
 
-  const checkFileExists = async (getUriOptions: GetUriOptions): Promise<boolean> => {
+  const checkDirectoryExists = async (getUriOptions: GetUriOptions): Promise<boolean> => {
     try {
-      await Filesystem.stat(getUriOptions);
+      console.log("### aaa")
+      await Filesystem.readdir(getUriOptions);
+      console.log("### bbb")
       return true;
     } catch (err: any) {
-      //if (err.message === 'File does not exist') {
-        return false;
-      //}
+        console.log("### ccc")
+        return false;//exist
     }
   }
 
   const readDir = async () => {
-    if(! await checkFileExists({
+    const exist = await checkDirectoryExists({
       path: savedFolder,
       directory: savedDirType,
-    })){
-      await Filesystem.mkdir({
-        path: savedFolder,
-        directory: savedDirType,
-        recursive: true
-      });
+    })
+    if(! exist){
+      console.log("############### ddd")
+
+      try{
+        await Filesystem.mkdir({
+          path: savedFolder,
+          directory: savedDirType,
+          recursive: true
+        });
+      }catch(e){
+        console.log(e)
+      }
     }
 
     const files = await Filesystem.readdir({
