@@ -23,7 +23,7 @@ function Home() {
   const [nowRecording, setNowRecording] = useState(false)
   const [recordingfiles, setRecordingFiles] = useState<FileInfo[]>([])
 
-  const savedFolder = 'voiceR/'
+  const savedFolder = 'voiceR/files/'
   const savedDirType = Directory.Data
 
   useEffect(()=>{
@@ -74,12 +74,13 @@ function Home() {
       setBase64Sound(result.value.recordDataBase64)
       const dateTime = new Date().getTime()
       console.log("dateTime", dateTime)
-      await Filesystem.writeFile({
+      const res = await Filesystem.writeFile({
         path: savedFolder+dateTime+".bin",
         data: result.value.recordDataBase64,
         directory: savedDirType,
         encoding: Encoding.UTF8,
       });
+      console.log("res", res)
       await readDir()
     })
     .catch(error => console.log(error))
