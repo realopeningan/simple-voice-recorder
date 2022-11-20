@@ -149,7 +149,6 @@ function Home() {
         path: savedFolder,
         directory: savedDirType,
       });
-
     }
 
     const files = await Filesystem.readdir({
@@ -182,7 +181,7 @@ function Home() {
             {
               recordingfiles.map((file)=>{
                 return(
-                  <ListItem>
+                  <ListItem key={`${file.name}`} >
                     <ListItemText primary={`${file.name}`} secondary={`${file.ctime}`} onClick={()=>playFile(`${file.name}`)}/>
                   </ListItem>
                 )
