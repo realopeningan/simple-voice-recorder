@@ -18,7 +18,7 @@ const Topbar: React.FC = () => {
                 <MenuIcon />
                 </IconButton>
                 <Typography variant="subtitle1" color="inherit" component="div">
-                VoiceR
+                VoiceR--
                 </Typography>
             </Toolbar>
             </AppBar>
