@@ -72,10 +72,12 @@ function Home() {
     .then(async (result: RecordingData) => {
       console.log(result.value)
       setBase64Sound(result.value.recordDataBase64)
-      const dateTime = new Date().getTime()
+      const date = new Date()
+      let dateTime = `${date.getFullYear()}.${date.getMonth()}.${date.getDate()}.${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+      dateTime = dateTime.substring(2)
       console.log("dateTime", dateTime)
       const res = await Filesystem.writeFile({
-        path: savedFolder+dateTime+".bin",
+        path: savedFolder+dateTime,
         data: result.value.recordDataBase64,
         directory: savedDirType,
         encoding: Encoding.UTF8,
@@ -149,6 +151,7 @@ function Home() {
       await Filesystem.mkdir({
         path: savedFolder,
         directory: savedDirType,
+        recursive: true
       });
     }
 
@@ -161,6 +164,12 @@ function Home() {
 
     setRecordingFiles(files.files)
   };
+
+  const dateToString = (date:number|undefined) =>{
+    if(date===undefined)
+      return ""
+    return new Date(Number(date)).toDateString()
+  }
 
 
   const playFile = async (fileName:string) => {
@@ -183,7 +192,7 @@ function Home() {
               recordingfiles.map((file)=>{
                 return(
                   <ListItem key={`${file.name}`} >
-                    <ListItemText primary={`${file.name}`} secondary={`${file.ctime}`} onClick={()=>playFile(`${file.name}`)}/>
+                    <ListItemText primary={`${file.name}`} secondary={`${dateToString(file.ctime)}`} onClick={()=>playFile(`${file.name}`)}/>
                   </ListItem>
                 )
               })
