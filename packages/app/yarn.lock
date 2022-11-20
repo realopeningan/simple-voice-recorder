@@ -44,6 +44,11 @@
   dependencies:
     tslib "^2.1.0"
 
+"@capacitor/filesystem@^4.1.4":
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@capacitor/filesystem/-/filesystem-4.1.4.tgz#021ef707ca199d554042ebc85151416dec07020a"
+  integrity sha512-ivko1RNK4hq63xhMacq8D6D97N5/SAafTsrmY/pghYrG6Cl2SEY0+IgRu7V9/VWeN3FSplyUPucjUTAFQxXN5g==
+
 "@capacitor/ios@^4.4.0":
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-4.4.0.tgz#a6dfdcc969b07e067d26e6c38e92655e5527e759"

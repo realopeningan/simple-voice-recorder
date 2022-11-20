@@ -1,36 +1,34 @@
 import {
   VoiceRecorder,
-  VoiceRecorderPlugin,
   RecordingData,
   GenericResponse,
   CurrentRecordingStatus
 } from 'capacitor-voice-recorder';
 import { useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import { StyledEngineProvider } from '@mui/material/styles';
-//import { css } from '@emotion/react'
-//import styled from '@emotion/styled'
 import { css } from '@emotion/css'
-import MicNoneTwoToneIcon from '@mui/icons-material/MicNoneTwoTone';
-import AdjustIcon from '@mui/icons-material/Adjust';
-import MenuIcon from '@mui/icons-material/Menu';
-import { styled } from '@mui/material/styles';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import SearchIcon from '@mui/icons-material/Search';
-import MoreIcon from '@mui/icons-material/MoreVert';
 
-import { AppBar, createTheme, Icon, IconButton, List, ListItem, ListItemText, makeStyles, ThemeProvider, Toolbar, Typography } from '@mui/material';
-import { orange } from '@mui/material/colors';
+import {
+  createTheme,
+  List,
+  ListItem,
+  ListItemText,
+  ThemeProvider,
+} from '@mui/material';
+import Topbar from '../components/Topbar';
+import Footer from '../components/Footer';
+import { Directory, Encoding, FileInfo, Filesystem, GetUriOptions } from '@capacitor/filesystem';
+
 function Home() {
-
 	const [base64Sound, setBase64Sound] = useState<undefined|string>(undefined)
   const [nowRecording, setNowRecording] = useState(false)
+  const [recordingfiles, setRecordingFiles] = useState<FileInfo[]>([])
 
+  const savedFolder = 'voiceR/'
+  const savedDirType = Directory.Data
 
   useEffect(()=>{
     try{
+      readDir()
       VoiceRecorder.canDeviceVoiceRecord().then(
         (result: GenericResponse) => console.log(result.value)
       )
@@ -42,6 +40,10 @@ function Home() {
       VoiceRecorder.hasAudioRecordingPermission().then(
         (result: GenericResponse) => console.log(result.value)
       )
+
+      Filesystem.requestPermissions().then(
+        (result: any) => console.log(result)
+      )
     }catch(e){
       console.log("error", e)
     }
@@ -51,6 +53,7 @@ function Home() {
     console.log("click btn")
     if(nowRecording){
       stopRecording()
+
     }else{
       startRecording()
     }
@@ -66,9 +69,18 @@ function Home() {
   const stopRecording = () =>{
     setNowRecording(false)
     VoiceRecorder.stopRecording()
-    .then((result: RecordingData) => {
+    .then(async (result: RecordingData) => {
       console.log(result.value)
       setBase64Sound(result.value.recordDataBase64)
+      const dateTime = new Date().getTime()
+      console.log("dateTime", dateTime)
+      await Filesystem.writeFile({
+        path: savedFolder+dateTime+".bin",
+        data: result.value.recordDataBase64,
+        directory: savedDirType,
+        encoding: Encoding.UTF8,
+      });
+      await readDir()
     })
     .catch(error => console.log(error))
   }
@@ -92,40 +104,19 @@ function Home() {
     .catch(error => console.log(error))
   }
 
-  const playRecording = () =>{
-    if(base64Sound!==undefined){
-      const mimeType = 'audio/aac'  // from plugin
-      const audioRef = new Audio(`data:${mimeType};base64,${base64Sound}`)
-      console.log("base64Sound", base64Sound)
-      audioRef.oncanplaythrough = () => audioRef.play()
-      audioRef.load()
-    }
+  const playRecording = (data: string) =>{
+    const mimeType = 'audio/aac'  // from plugin
+    const audioRef = new Audio(`data:${mimeType};base64,${data}`)
+    console.log("base64Sound", data)
+    audioRef.oncanplaythrough = () => audioRef.play()
+    audioRef.load()
   }
 
-  const color = 'white'
   const div1Style=css`
     display: flex;
     flex-direction: column;
     height: 100vh
   `
-  const div2Style=css`
-    padding: 10px;
-    background-color: #B0BEC5;
-    font-size: 24px;
-    height: 10%;
-    &:hover {
-      color: ${color};
-    }
-  `
-
-  const StyledFab = styled(Fab)({
-    position: 'absolute',
-    zIndex: 1,
-    top: '50%',
-    left: 0,
-    right: 0,
-    margin: '0 auto'
-  });
 
   let theme = createTheme({
     palette: {
@@ -138,57 +129,68 @@ function Home() {
     },
   });
 
+  const checkFileExists = async (getUriOptions: GetUriOptions): Promise<boolean> => {
+    try {
+      await Filesystem.stat(getUriOptions);
+      return true;
+    } catch (err: any) {
+      //if (err.message === 'File does not exist') {
+        return false;
+      //}
+    }
+  }
+
+  const readDir = async () => {
+    if(! await checkFileExists({
+      path: savedFolder,
+      directory: savedDirType,
+    })){
+      await Filesystem.mkdir({
+        path: savedFolder,
+        directory: savedDirType,
+      });
+
+    }
+
+    const files = await Filesystem.readdir({
+      path: savedFolder,
+      directory: savedDirType,
+    });
+
+    console.log("files", JSON.stringify(files))
+
+    setRecordingFiles(files.files)
+  };
+
+
+  const playFile = async (fileName:string) => {
+    const contents = await Filesystem.readFile({
+      path: savedFolder+fileName,
+      directory: savedDirType,
+      encoding: Encoding.UTF8
+    });
+    playRecording(contents.data)
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div className={div1Style}>
-        <div className={div2Style}/>
-        <AppBar sx={{
-          height: '10%',
-          position: 'fixed',
-          paddingTop: 'env(safe-area-inset-top)',
-          paddingLeft: `env(safe-area-inset-left)`,
-          paddingRight: `env(safe-area-inset-right)`
-         }} elevation={0}>
-          <Toolbar sx={{height: '100%'}} variant="dense">
-            <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" color="inherit" component="div">
-              VoiceR
-            </Typography>
-          </Toolbar>
-        </AppBar>
-
+        <Topbar/>
         <div
           className={css`height:75%`}>
           <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', position: 'fixed'}}>
-            <ListItem>
-              <ListItemText primary="Sample1" secondary="Jan 9, 2014" onClick={playRecording}/>
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Sample2" secondary="Jan 7, 2014" />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Sample3" secondary="July 20, 2014" />
-            </ListItem>
+            {
+              recordingfiles.map((file)=>{
+                return(
+                  <ListItem>
+                    <ListItemText primary={`${file.name}`} secondary={`${file.ctime}`} onClick={()=>playFile(`${file.name}`)}/>
+                  </ListItem>
+                )
+              })
+            }
           </List>
         </div>
-        <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0, height: '15%' }}>
-          <Toolbar>
-            <StyledFab size="large" color="secondary" aria-label="add" onClick={btnClick}>
-              {nowRecording?<AdjustIcon sx={{ fontSize: 40}}/>:<MicNoneTwoToneIcon sx={{ fontSize: 40}}/>}
-            </StyledFab>
-          </Toolbar>
-        </AppBar>
-        {/* <Box sx={{ '& button': { m: 1 }, 'display': 'flex', 'flexDirection': 'column'}}>
-          <Button variant="contained" onClick={startRecording}>Recording Start 1</Button>
-          <Button variant="contained" onClick={stopRecording}>Recording Stop 2</Button>
-          <Button variant="contained" onClick={pauseRecording}>Recording Pause 3</Button>
-          <Button variant="contained" onClick={resumeRecording}>Recording Resume</Button>
-          <Button variant="outlined" onClick={playRecording}>Playing</Button>
-          <Button variant="outlined" onClick={getStatus}>GetStatus</Button>
-        </Box> */}
-
+        <Footer recording={nowRecording} btnClick={btnClick}/>
       </div>
     </ThemeProvider>
   )
