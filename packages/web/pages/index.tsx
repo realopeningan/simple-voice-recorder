@@ -12,11 +12,19 @@ import {
   List,
   ListItem,
   ListItemText,
+  Tab,
+  Tabs,
   ThemeProvider,
 } from '@mui/material';
 import Topbar from '../components/Topbar';
 import Footer from '../components/Footer';
 import { Directory, Encoding, FileInfo, Filesystem, GetUriOptions } from '@capacitor/filesystem';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import TabPanel from '@mui/lab/TabPanel';
+import { TabContext, TabList } from '@mui/lab';
+
 
 function Home() {
 	const [base64Sound, setBase64Sound] = useState<undefined|string>(undefined)
@@ -24,6 +32,7 @@ function Home() {
   const [recordingfiles, setRecordingFiles] = useState<FileInfo[]>([])
   const [firstLoad, setFirstLoad] = useState(true)
 
+  const [nav, setNav] = useState("1")
   const savedFolder = 'voiceR/files/'
   const savedDirType = Directory.Data
 
@@ -193,24 +202,41 @@ function Home() {
     playRecording(contents.data)
   };
 
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setNav(newValue);
+  };
+
+
   return (
     <ThemeProvider theme={theme}>
       <div className={div1Style}>
         <Topbar/>
-        <div
-          className={css`height:75%`}>
-          <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', position: 'fixed'}}>
-            {
-              recordingfiles.map((file)=>{
-                return(
-                  <ListItem key={`${file.name}`} >
-                    <ListItemText primary={`${file.name}`} secondary={`${dateToString(file.ctime)}`} onClick={()=>playFile(`${file.name}`)}/>
-                  </ListItem>
-                )
-              })
-            }
-          </List>
-        </div>
+        <TabContext value={nav}>
+          <TabList onChange={handleChange} variant="fullWidth" aria-label="lab API tabs">
+            <Tab icon={<AccessTimeIcon />} aria-label="phone" value="1"/>
+            <Tab icon={<CalendarMonthIcon />} aria-label="favorite" value="2"/>
+            <Tab icon={<DeleteSweepIcon />} aria-label="person" value="3"/>
+          </TabList>
+          <TabPanel value="1">
+            <div
+            className={css`height:75%`}>
+              <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', position: 'fixed'}}>
+                {
+                  recordingfiles.map((file)=>{
+                    return(
+                      <ListItem key={`${file.name}`} >
+                        <ListItemText primary={`${file.name}`} secondary={`${dateToString(file.ctime)}`} onClick={()=>playFile(`${file.name}`)}/>
+                      </ListItem>
+                    )
+                  })
+                }
+              </List>
+            </div>
+          </TabPanel>
+          <TabPanel value="2">Item Two</TabPanel>
+          <TabPanel value="3">Item Three</TabPanel>
+      </TabContext>
+
         <Footer recording={nowRecording} btnClick={btnClick}/>
       </div>
     </ThemeProvider>
