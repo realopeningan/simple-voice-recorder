@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import { css } from '@emotion/css'
 
 import {
+  AppBar,
+  Box,
   createTheme,
   List,
   ListItem,
@@ -15,6 +17,7 @@ import {
   Tab,
   Tabs,
   ThemeProvider,
+  Typography,
 } from '@mui/material';
 import Topbar from '../components/Topbar';
 import Footer from '../components/Footer';
@@ -22,9 +25,44 @@ import { Directory, Encoding, FileInfo, Filesystem, GetUriOptions } from '@capac
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
-import TabPanel from '@mui/lab/TabPanel';
+//import TabPanel from '@mui/lab/TabPanel';
 import { TabContext, TabList } from '@mui/lab';
+import SwipeableViews from 'react-swipeable-views';
 
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  dir?: string;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `full-width-tab-${index}`,
+    'aria-controls': `full-width-tabpanel-${index}`,
+  };
+}
 
 function Home() {
 	const [base64Sound, setBase64Sound] = useState<undefined|string>(undefined)
@@ -33,6 +71,17 @@ function Home() {
   const [firstLoad, setFirstLoad] = useState(true)
 
   const [nav, setNav] = useState("1")
+
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
+  const handleChangeIndex = (index: number) => {
+    setValue(index);
+  };
+
   const savedFolder = 'voiceR/files/'
   const savedDirType = Directory.Data
 
@@ -202,16 +251,16 @@ function Home() {
     playRecording(contents.data)
   };
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setNav(newValue);
-  };
+  // const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  //   setNav(newValue);
+  // };
 
 
   return (
     <ThemeProvider theme={theme}>
       <div className={div1Style}>
         <Topbar/>
-        <TabContext value={nav}>
+        {/* <TabContext value={nav}>
           <TabList onChange={handleChange} variant="fullWidth" aria-label="lab API tabs">
             <Tab icon={<AccessTimeIcon />} aria-label="phone" value="1"/>
             <Tab icon={<CalendarMonthIcon />} aria-label="favorite" value="2"/>
@@ -235,8 +284,46 @@ function Home() {
           </TabPanel>
           <TabPanel value="2">Item Two</TabPanel>
           <TabPanel value="3">Item Three</TabPanel>
-      </TabContext>
-
+      </TabContext> */}
+        <AppBar position="static">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="secondary"
+            textColor="inherit"
+            variant="fullWidth"
+            aria-label="full width tabs example"
+          >
+            <Tab icon={<AccessTimeIcon />} aria-label="phone" {...a11yProps(0)} />
+            <Tab icon={<CalendarMonthIcon />} aria-label="favorite" {...a11yProps(1)} />
+            <Tab icon={<DeleteSweepIcon />} aria-label="person" {...a11yProps(2)} />
+          </Tabs>
+        </AppBar>
+        <SwipeableViews
+          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+          index={value}
+          onChangeIndex={handleChangeIndex}
+        >
+          <TabPanel value={value} index={0} >
+              <List sx={{ height: '75%', width: '100%', bgcolor: 'background.paper'}}>
+                {
+                  recordingfiles.map((file)=>{
+                    return(
+                      <ListItem key={`${file.name}`} >
+                        <ListItemText primary={`${file.name}`} secondary={`${dateToString(file.ctime)}`} onClick={()=>playFile(`${file.name}`)}/>
+                      </ListItem>
+                    )
+                  })
+                }
+              </List>
+          </TabPanel>
+          <TabPanel value={value} index={1} >
+            Item Two
+          </TabPanel>
+          <TabPanel value={value} index={2} >
+            Item Three
+          </TabPanel>
+        </SwipeableViews>
         <Footer recording={nowRecording} btnClick={btnClick}/>
       </div>
     </ThemeProvider>
