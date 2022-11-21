@@ -11,6 +11,8 @@ import {
   AppBar,
   Box,
   createTheme,
+  Divider,
+  duration,
   List,
   ListItem,
   ListItemText,
@@ -49,15 +51,15 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+        <Box >
+          {children}
         </Box>
       )}
     </div>
   );
 }
 
-function a11yProps(index: number) {
+function a11yProps(index?: number) {
   return {
     id: `full-width-tab-${index}`,
     'aria-controls': `full-width-tabpanel-${index}`,
@@ -191,7 +193,7 @@ function Home() {
       secondary: {
         main: '#fafafa',
       },
-    },
+    }
   });
 
   const checkDirectoryExists = async (getUriOptions: GetUriOptions): Promise<boolean> => {
@@ -260,39 +262,12 @@ function Home() {
     <ThemeProvider theme={theme}>
       <div className={div1Style}>
         <Topbar/>
-        {/* <TabContext value={nav}>
-          <TabList onChange={handleChange} variant="fullWidth" aria-label="lab API tabs">
-            <Tab icon={<AccessTimeIcon />} aria-label="phone" value="1"/>
-            <Tab icon={<CalendarMonthIcon />} aria-label="favorite" value="2"/>
-            <Tab icon={<DeleteSweepIcon />} aria-label="person" value="3"/>
-          </TabList>
-          <TabPanel value="1">
-            <div
-            className={css`height:75%`}>
-              <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', position: 'fixed'}}>
-                {
-                  recordingfiles.map((file)=>{
-                    return(
-                      <ListItem key={`${file.name}`} >
-                        <ListItemText primary={`${file.name}`} secondary={`${dateToString(file.ctime)}`} onClick={()=>playFile(`${file.name}`)}/>
-                      </ListItem>
-                    )
-                  })
-                }
-              </List>
-            </div>
-          </TabPanel>
-          <TabPanel value="2">Item Two</TabPanel>
-          <TabPanel value="3">Item Three</TabPanel>
-      </TabContext> */}
         <AppBar position="static">
           <Tabs
             value={value}
             onChange={handleChange}
-            indicatorColor="secondary"
             textColor="inherit"
             variant="fullWidth"
-            aria-label="full width tabs example"
           >
             <Tab icon={<AccessTimeIcon />} aria-label="phone" {...a11yProps(0)} />
             <Tab icon={<CalendarMonthIcon />} aria-label="favorite" {...a11yProps(1)} />
@@ -305,17 +280,20 @@ function Home() {
           onChangeIndex={handleChangeIndex}
         >
           <TabPanel value={value} index={0} >
-              <List sx={{ height: '75%', width: '100%', bgcolor: 'background.paper'}}>
-                {
-                  recordingfiles.map((file)=>{
-                    return(
-                      <ListItem key={`${file.name}`} >
+            <List sx={{ height: '75%', width: '100%'}}>
+              {
+                recordingfiles.map((file)=>{
+                  return(
+                    <>
+                      <ListItem key={`${file.ctime}`} >
                         <ListItemText primary={`${file.name}`} secondary={`${dateToString(file.ctime)}`} onClick={()=>playFile(`${file.name}`)}/>
                       </ListItem>
-                    )
-                  })
-                }
-              </List>
+                      <Divider/>
+                    </>
+                  )
+                })
+              }
+            </List>
           </TabPanel>
           <TabPanel value={value} index={1} >
             Item Two
