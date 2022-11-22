@@ -12,14 +12,12 @@ import {
   Box,
   createTheme,
   Divider,
-  duration,
   List,
   ListItem,
   ListItemText,
   Tab,
   Tabs,
   ThemeProvider,
-  Typography,
 } from '@mui/material';
 import Topbar from '../components/Topbar';
 import Footer from '../components/Footer';
@@ -253,6 +251,17 @@ function Home() {
     playRecording(contents.data)
   };
 
+  const [bodyHight, setBodyHeight] = useState('70%')
+
+  const onFooterClick = (click:boolean) =>{
+    console.log(`footerClick : ${click}`)
+    if(click===true){
+      setBodyHeight('55%')
+    }else{
+      setBodyHeight('70%')
+    }
+  }
+
   // const handleChange = (event: React.SyntheticEvent, newValue: string) => {
   //   setNav(newValue);
   // };
@@ -278,6 +287,9 @@ function Home() {
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={value}
           onChangeIndex={handleChangeIndex}
+          className={css`
+            height:${bodyHight}
+          `}
         >
           <TabPanel value={value} index={0} >
             <List sx={{ height: '75%', width: '100%'}}>
@@ -302,7 +314,7 @@ function Home() {
             Item Three
           </TabPanel>
         </SwipeableViews>
-        <Footer recording={nowRecording} btnClick={btnClick}/>
+        <Footer recording={nowRecording} btnClick={btnClick} footerClick={onFooterClick}/>
       </div>
     </ThemeProvider>
   )
