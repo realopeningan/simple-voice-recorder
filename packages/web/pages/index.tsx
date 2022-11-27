@@ -251,14 +251,14 @@ function Home() {
     playRecording(contents.data)
   };
 
-  const [bodyHight, setBodyHeight] = useState('70%')
+  const [bodyHeight, setBodyHeight] = useState('70%')
 
   const onFooterClick = (click:boolean) =>{
     console.log(`footerClick : ${click}`)
     if(click===true){
-      setBodyHeight('55%')
+      setBodyHeight('56%')
     }else{
-      setBodyHeight('70%')
+      setBodyHeight('71%')
     }
   }
 
@@ -271,7 +271,7 @@ function Home() {
     <ThemeProvider theme={theme}>
       <div className={div1Style}>
         <Topbar/>
-        <AppBar elevation={0} sx={{position:"fixed", top:"10%"}}>
+        <AppBar elevation={1} sx={{position:"fixed", top:"10%", height: "4%"}}>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -288,11 +288,14 @@ function Home() {
           index={value}
           onChangeIndex={handleChangeIndex}
           className={css`
-            height:${bodyHight}
+            position: fixed;
+            top: 14%;
+            height: ${bodyHeight};
+            width: 100%;
           `}
         >
           <TabPanel value={value} index={0} >
-            <List sx={{ height: '75%', width: '100%'}}>
+            <List>
               {
                 recordingfiles.map((file)=>{
                   return(
