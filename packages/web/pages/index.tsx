@@ -271,7 +271,7 @@ function Home() {
     <ThemeProvider theme={theme}>
       <div className={div1Style}>
         <Topbar/>
-        <AppBar position="static">
+        <AppBar elevation={1} sx={{position:"fixed", top:"10%", height: "4%"}}>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -288,11 +288,14 @@ function Home() {
           index={value}
           onChangeIndex={handleChangeIndex}
           className={css`
-            height:${bodyHight}
+            position: fixed;
+            top: 14%;
+            height: 100%;
+            width: 100%;
           `}
         >
           <TabPanel value={value} index={0} >
-            <List sx={{ height: '75%', width: '100%'}}>
+            <List>
               {
                 recordingfiles.map((file)=>{
                   return(
