@@ -251,14 +251,14 @@ function Home() {
     playRecording(contents.data)
   };
 
-  const [bodyHight, setBodyHeight] = useState('70%')
+  const [bodyHeight, setBodyHeight] = useState('70%')
 
   const onFooterClick = (click:boolean) =>{
     console.log(`footerClick : ${click}`)
     if(click===true){
-      setBodyHeight('55%')
+      setBodyHeight('56%')
     }else{
-      setBodyHeight('70%')
+      setBodyHeight('71%')
     }
   }
 
@@ -290,7 +290,7 @@ function Home() {
           className={css`
             position: fixed;
             top: 14%;
-            height: 100%;
+            height: ${bodyHeight};
             width: 100%;
           `}
         >
