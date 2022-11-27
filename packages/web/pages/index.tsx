@@ -271,7 +271,7 @@ function Home() {
     <ThemeProvider theme={theme}>
       <div className={div1Style}>
         <Topbar/>
-        <AppBar position="static">
+        <AppBar elevation={0} sx={{position:"fixed", top:"10%"}}>
           <Tabs
             value={value}
             onChange={handleChange}
