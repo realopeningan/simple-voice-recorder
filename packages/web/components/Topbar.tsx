@@ -13,9 +13,7 @@ const useStyles = makeStyles(theme => ({
     },
     hiddenBar:{
         position: 'sticky',
-        paddingTop: `env(safe-area-inset-top)`,
-        paddingLeft: `env(safe-area-inset-left)`,
-        paddingRight: `env(safe-area-inset-right)`
+        marginTop: `env(safe-area-inset-top)`
     }
 }));
 
@@ -37,9 +35,7 @@ const Topbar: React.FC = () => {
                 </Toolbar>
             </AppBar>
             {/* Below is fake for layout */}
-            <Toolbar className={classes.hiddenBar}>
-                <Toolbar sx={{height: '100%'}}/>
-            </Toolbar>
+            <Toolbar className={classes.hiddenBar}/>
         </>
     )
 
