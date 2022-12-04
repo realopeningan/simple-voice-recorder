@@ -5,7 +5,7 @@ const stage = process.env.STAGE
 let url= 'http://0.0.0.0:3000'
 switch(stage){
   case 'dev':
-    url = 'http://192.168.0.4:3000/simple-voice-recorder'
+    url = 'http://172.29.25.188:3000/simple-voice-recorder'
     break
   case 'prod':
     url = 'https://realopeningan.github.io/simple-voice-recorder'
