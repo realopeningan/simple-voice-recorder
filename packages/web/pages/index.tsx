@@ -262,61 +262,25 @@ function Home() {
     }
   }
 
-  // const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-  //   setNav(newValue);
-  // };
-
 
   return (
     <ThemeProvider theme={theme}>
       <div className={div1Style}>
         <Topbar/>
-        <AppBar elevation={1} sx={{position:"fixed", top:"10%", height: "4%"}}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            textColor="inherit"
-            variant="fullWidth"
-          >
-            <Tab icon={<AccessTimeIcon />} aria-label="phone" {...a11yProps(0)} />
-            <Tab icon={<CalendarMonthIcon />} aria-label="favorite" {...a11yProps(1)} />
-            <Tab icon={<DeleteSweepIcon />} aria-label="person" {...a11yProps(2)} />
-          </Tabs>
-        </AppBar>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-          className={css`
-            position: fixed;
-            top: 14%;
-            height: ${bodyHeight};
-            width: 100%;
-          `}
-        >
-          <TabPanel value={value} index={0} >
-            <List>
-              {
-                recordingfiles.map((file)=>{
-                  return(
-                    <>
-                      <ListItem key={`${file.ctime}`} >
-                        <ListItemText primary={`${file.name}`} secondary={`${dateToString(file.ctime)}`} onClick={()=>playFile(`${file.name}`)}/>
-                      </ListItem>
-                      <Divider/>
-                    </>
-                  )
-                })
-              }
-            </List>
-          </TabPanel>
-          <TabPanel value={value} index={1} >
-            Item Two
-          </TabPanel>
-          <TabPanel value={value} index={2} >
-            Item Three
-          </TabPanel>
-        </SwipeableViews>
+        <List>
+          {
+            recordingfiles.map((file)=>{
+              return(
+                <>
+                  <ListItem key={`${file.ctime}`} >
+                    <ListItemText primary={`${file.name}`} secondary={`${dateToString(file.ctime)}`} onClick={()=>playFile(`${file.name}`)}/>
+                  </ListItem>
+                  <Divider/>
+                </>
+              )
+            })
+          }
+        </List>
         <Footer recording={nowRecording} btnClick={btnClick} footerClick={onFooterClick}/>
       </div>
     </ThemeProvider>

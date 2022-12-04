@@ -1,7 +1,7 @@
 import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
 import React from "react";
-import MenuIcon from '@mui/icons-material/Menu';
 import { css } from '@emotion/css'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const Topbar: React.FC = () => {
     return (
@@ -16,7 +16,7 @@ const Topbar: React.FC = () => {
                 }} elevation={0}>
                 <Toolbar sx={{height: '100%'}} variant="dense">
                     <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-                    <MenuIcon />
+                    <ArrowBackIosIcon />
                     </IconButton>
                     <Typography variant="subtitle1" color="inherit" component="div">
                     VoiceR
