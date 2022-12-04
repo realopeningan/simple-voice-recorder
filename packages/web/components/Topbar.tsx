@@ -9,8 +9,14 @@ const useStyles = makeStyles(theme => ({
         position: 'fixed',
         paddingTop: `env(safe-area-inset-top)`,
         paddingLeft: `env(safe-area-inset-left)`,
-        paddingRight: `env(safe-area-inset-right)`
+        paddingRight: `env(safe-area-inset-right)`,
     },
+    hiddenBar:{
+        position: 'sticky',
+        paddingTop: `env(safe-area-inset-top)`,
+        paddingLeft: `env(safe-area-inset-left)`,
+        paddingRight: `env(safe-area-inset-right)`
+    }
 }));
 
 const Topbar: React.FC = () => {
@@ -28,9 +34,12 @@ const Topbar: React.FC = () => {
                     <Typography variant="subtitle1" color="inherit" component="div">
                     VoiceR
                     </Typography>
-            </Toolbar>
+                </Toolbar>
             </AppBar>
-            <Toolbar />
+            {/* Below is fake for layout */}
+            <Toolbar className={classes.hiddenBar}>
+                <Toolbar sx={{height: '100%'}}/>
+            </Toolbar>
         </>
     )
 
