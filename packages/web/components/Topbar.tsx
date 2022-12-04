@@ -18,7 +18,6 @@ const Topbar: React.FC = () => {
 
     return (
         <>
-            <div className={css` height: 10%;`}/>
             <AppBar
                 className={classes.appBar}
                 elevation={0}>
@@ -31,6 +30,7 @@ const Topbar: React.FC = () => {
                     </Typography>
             </Toolbar>
             </AppBar>
+            <Toolbar />
         </>
     )
 
