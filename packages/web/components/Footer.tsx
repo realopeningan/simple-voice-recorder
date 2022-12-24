@@ -1,12 +1,8 @@
-import { AppBar, Toolbar } from "@mui/material";
+import { AppBar, Button, IconButton, Stack, Toolbar, Typography } from "@mui/material";
 import React, { useState } from "react";
 
-import MicNoneTwoToneIcon from '@mui/icons-material/MicNoneTwoTone';
-import AdjustIcon from '@mui/icons-material/Adjust';
-import { styled } from '@mui/material/styles';
-import Fab from '@mui/material/Fab';
-import { css } from "@emotion/css";
-
+import MicExternalOnTwoToneIcon from '@mui/icons-material/MicExternalOnTwoTone';
+import AlbumTwoToneIcon from '@mui/icons-material/AlbumTwoTone';
 
 interface RecordingProps{
     recording: boolean,
@@ -15,33 +11,44 @@ interface RecordingProps{
 }
 
 const Footer: React.FC<RecordingProps> = ({recording, btnClick, footerClick}) => {
-
     const [click, setClick] = useState(false)
-    const StyledFab = styled(Fab)({
-        position: 'absolute',
-        zIndex: 1,
-        bottom: 30,
-        left: 0,
-        right: 0,
-        margin: '0 auto'
-    });
-
-    // const appBarClick = () =>{
-    //   setFooterClick(!footerClick)
-    //   console.log("appBarClick")
-    // }
-
     const appBarProps = {
       top: 'auto',
       bottom: 0,
-      height: click===true?'30%':'15%'
+      height: '15%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+
+    const buttonProps = (recording:boolean)=> {
+      return ({
+        height: '80%',
+        width: '30%',
+        borderRadius: '50px',
+        bgcolor: recording?'secondary.light': 'success.light',
+        }
+      )
     }
 
     return (
-        <AppBar position="fixed" color="primary" sx={appBarProps} onClick={()=>{setClick(!click); footerClick(!click)}}>
-          <StyledFab size="large" color="secondary" aria-label="add" onClick={btnClick}>
-            {recording?<AdjustIcon sx={{ fontSize: 40}}/>:<MicNoneTwoToneIcon sx={{ fontSize: 40}}/>}
-          </StyledFab>
+        <AppBar position="fixed" color="primary" sx={appBarProps}
+          onClick={()=>{setClick(!click); footerClick(!click)}}>
+
+          <Button variant="contained" sx={buttonProps(recording)} onClick={btnClick}>
+          {recording?
+            <Stack direction="column" alignItems="center" justifyContent={"center"}>
+              <AlbumTwoToneIcon sx={{ fontSize: '800%'}}/>
+              <Typography>Stop</Typography>
+            </Stack>
+            :
+            <Stack direction="column" alignItems="center" justifyContent={"center"}>
+              <MicExternalOnTwoToneIcon sx={{ fontSize: '800%'}}/>
+              <Typography>Recording</Typography>
+            </Stack>
+            }
+          </Button>
         </AppBar>
     )
 

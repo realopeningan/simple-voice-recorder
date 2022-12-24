@@ -186,11 +186,18 @@ function Home() {
   let theme = createTheme({
     palette: {
       primary: {
-        main: '#f5f5f5',
+        main: '#64b5f6',
       },
       secondary: {
-        main: '#fafafa',
+        main: '#fbc02d',
+        light: '#fff263',
+        dark: '#c49000'
       },
+      success:{
+        main: '#4caf50',
+        light: '#80e27e',
+        dark: '#087f23'
+      }
     }
   });
 
