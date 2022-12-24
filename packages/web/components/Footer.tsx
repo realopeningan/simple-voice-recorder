@@ -23,32 +23,30 @@ const Footer: React.FC<RecordingProps> = ({recording, btnClick, footerClick}) =>
     }
 
     const buttonProps = {
-      height: '80%',
-      width: '30%',
-      borderRadius: '20px',
-      backgroundColor: recording?'secondary.light':'success.light',
-      hover:{
-        backgroundColor: recording?'secondary.light':'success.light',
-      }
+      height: '70%',
+      width: '25%',
+      borderRadius: '20px'
     }
 
     console.log("recording", recording)
     return (
         <AppBar position="fixed" color="primary" sx={appBarProps}
           onClick={()=>{setClick(!click); footerClick(!click)}}>
-           <Button variant="contained" sx={buttonProps} onClick={btnClick}>
           {recording?
-              <Stack direction="column" alignItems="center" justifyContent={"center"}>
-                <AlbumTwoToneIcon sx={{ fontSize: '300%'}}/>
-                <Typography>Stop</Typography>
-              </Stack>
+              <Button variant="contained" sx={buttonProps} color={"secondary"} onClick={btnClick}>
+                <Stack direction="column" alignItems="center" justifyContent={"center"}>
+                  <AlbumTwoToneIcon sx={{ fontSize: '250%'}}/>
+                  <Typography>Stop</Typography>
+                </Stack>
+              </Button>
             :
-              <Stack direction="column" alignItems="center" justifyContent={"center"}>
-                <MicExternalOnTwoToneIcon sx={{ fontSize: '300%'}}/>
-                <Typography>Recording</Typography>
-              </Stack>
+              <Button variant="contained" sx={buttonProps} color={"success"} onClick={btnClick}>
+                <Stack direction="column" alignItems="center" justifyContent={"center"}>
+                    <MicExternalOnTwoToneIcon sx={{ fontSize: '250%'}}/>
+                    <Typography>Recording</Typography>
+                  </Stack>
+              </Button>
             }
-            </Button>
 
         </AppBar>
     )

@@ -189,14 +189,14 @@ function Home() {
         main: '#64b5f6',
       },
       secondary: {
-        main: '#fbc02d',
-        light: '#fff263',
-        dark: '#c49000'
+        main: '#ffeb3b',
+        light: '#ffff72',
+        dark: '#c8b900'
       },
       success:{
-        main: '#4caf50',
-        light: '#80e27e',
-        dark: '#087f23'
+        main: '#69f0ae',
+        light: '#9fffe0',
+        dark: '#2bbd7e'
       }
     }
   });
