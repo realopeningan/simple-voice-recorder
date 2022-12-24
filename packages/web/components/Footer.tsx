@@ -34,17 +34,11 @@ const Footer: React.FC<RecordingProps> = ({recording, btnClick, footerClick}) =>
           onClick={()=>{setClick(!click); footerClick(!click)}}>
           {recording?
               <Button variant="contained" sx={buttonProps} color={"secondary"} onClick={btnClick}>
-                <Stack direction="column" alignItems="center" justifyContent={"center"}>
-                  <AlbumTwoToneIcon sx={{ fontSize: '250%'}}/>
-                  <Typography>Stop</Typography>
-                </Stack>
+                <AlbumTwoToneIcon sx={{ fontSize: '300%'}}/>
               </Button>
             :
               <Button variant="contained" sx={buttonProps} color={"success"} onClick={btnClick}>
-                <Stack direction="column" alignItems="center" justifyContent={"center"}>
-                    <MicExternalOnTwoToneIcon sx={{ fontSize: '250%'}}/>
-                    <Typography>Recording</Typography>
-                  </Stack>
+                  <MicExternalOnTwoToneIcon sx={{ fontSize: '300%'}}/>
               </Button>
             }
 
