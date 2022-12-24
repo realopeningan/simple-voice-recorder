@@ -22,33 +22,34 @@ const Footer: React.FC<RecordingProps> = ({recording, btnClick, footerClick}) =>
       alignItems: 'center'
     }
 
-    const buttonProps = (recording:boolean)=> {
-      return ({
-        height: '80%',
-        width: '30%',
-        borderRadius: '50px',
-        bgcolor: recording?'secondary.light': 'success.light',
-        }
-      )
+    const buttonProps = {
+      height: '80%',
+      width: '30%',
+      borderRadius: '20px',
+      backgroundColor: recording?'secondary.light':'success.light',
+      hover:{
+        backgroundColor: recording?'secondary.light':'success.light',
+      }
     }
 
+    console.log("recording", recording)
     return (
         <AppBar position="fixed" color="primary" sx={appBarProps}
           onClick={()=>{setClick(!click); footerClick(!click)}}>
-
-          <Button variant="contained" sx={buttonProps(recording)} onClick={btnClick}>
+           <Button variant="contained" sx={buttonProps} onClick={btnClick}>
           {recording?
-            <Stack direction="column" alignItems="center" justifyContent={"center"}>
-              <AlbumTwoToneIcon sx={{ fontSize: '800%'}}/>
-              <Typography>Stop</Typography>
-            </Stack>
+              <Stack direction="column" alignItems="center" justifyContent={"center"}>
+                <AlbumTwoToneIcon sx={{ fontSize: '300%'}}/>
+                <Typography>Stop</Typography>
+              </Stack>
             :
-            <Stack direction="column" alignItems="center" justifyContent={"center"}>
-              <MicExternalOnTwoToneIcon sx={{ fontSize: '800%'}}/>
-              <Typography>Recording</Typography>
-            </Stack>
+              <Stack direction="column" alignItems="center" justifyContent={"center"}>
+                <MicExternalOnTwoToneIcon sx={{ fontSize: '300%'}}/>
+                <Typography>Recording</Typography>
+              </Stack>
             }
-          </Button>
+            </Button>
+
         </AppBar>
     )
 
