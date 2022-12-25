@@ -7,14 +7,19 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
     appBar: {
         position: 'fixed',
+        height: '8%',
         paddingTop: `env(safe-area-inset-top)`,
         paddingLeft: `env(safe-area-inset-left)`,
         paddingRight: `env(safe-area-inset-right)`,
     },
     hiddenBar:{
         position: 'sticky',
-        marginTop: `env(safe-area-inset-top)`
-    }
+        height: '8%',
+        minHeight: '8%',
+        paddingTop: `env(safe-area-inset-top)`,
+        paddingLeft: `env(safe-area-inset-left)`,
+        paddingRight: `env(safe-area-inset-right)`,
+   }
 }));
 
 const Topbar: React.FC = () => {

@@ -135,7 +135,7 @@ function Home() {
       console.log(result.value)
       setBase64Sound(result.value.recordDataBase64)
       const date = new Date()
-      let dateTime = `${date.getFullYear()}.${date.getMonth()}.${date.getDate()}.${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+      let dateTime = `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}.${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
       dateTime = dateTime.substring(2)
       console.log("dateTime", dateTime)
       const res = await Filesystem.writeFile({
@@ -221,8 +221,6 @@ function Home() {
       directory: savedDirType,
     })
     if(! exist){
-      console.log("############### ddd")
-
       try{
         await Filesystem.mkdir({
           path: savedFolder,
@@ -234,10 +232,14 @@ function Home() {
       }
     }
 
-    const files = await Filesystem.readdir({
+    let files = await Filesystem.readdir({
       path: savedFolder,
       directory: savedDirType,
     });
+
+    files.files.sort((function(a, b){
+      return String(b.ctime).localeCompare(String(a.ctime))
+    }))
 
     console.log("files", JSON.stringify(files))
 
@@ -272,8 +274,10 @@ function Home() {
   }
 
   const listProps = {
-    padding: 0
+    paddingTop: 0,
+    paddingBottom: '20%'
   }
+
   return (
     <ThemeProvider theme={theme}>
       <div className={div1Style}>
@@ -283,8 +287,10 @@ function Home() {
             recordingfiles.map((file)=>{
               return(
                 <>
-                  <ListItem key={`${file.ctime}`} sx={{backgroundColor: theme.palette.primary.light}}>
-                    <ListItemText primary={`${file.name}`} secondary={`${dateToString(file.ctime)}`} onClick={()=>playFile(`${file.name}`)}/>
+                  <ListItem key={`${file.ctime}`}
+                            sx={{backgroundColor: theme.palette.primary.light}}
+                            onClick={()=>playFile(`${file.name}`)}>
+                    <ListItemText primary={`${file.name}`} secondary={`${dateToString(file.ctime)}`}/>
                   </ListItem>
                   <Divider/>
                 </>
