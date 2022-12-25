@@ -186,7 +186,9 @@ function Home() {
   let theme = createTheme({
     palette: {
       primary: {
-        main: '#64b5f6',
+        main: '#bcbcbc',
+        light: '#eeeeee',
+        dark: '#8c8c8c'
       },
       secondary: {
         main: '#ffeb3b',
@@ -269,17 +271,19 @@ function Home() {
     }
   }
 
-
+  const listProps = {
+    padding: 0
+  }
   return (
     <ThemeProvider theme={theme}>
       <div className={div1Style}>
         <Topbar/>
-        <List>
+        <List sx={listProps} >
           {
             recordingfiles.map((file)=>{
               return(
                 <>
-                  <ListItem key={`${file.ctime}`} >
+                  <ListItem key={`${file.ctime}`} sx={{backgroundColor: theme.palette.primary.light}}>
                     <ListItemText primary={`${file.name}`} secondary={`${dateToString(file.ctime)}`} onClick={()=>playFile(`${file.name}`)}/>
                   </ListItem>
                   <Divider/>

@@ -26,16 +26,16 @@ const Topbar: React.FC = () => {
                 className={classes.appBar}
                 elevation={0}>
                 <Toolbar sx={{height: '100%'}} variant="dense">
-                    <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                    {/* <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
                     <ArrowBackIosIcon />
-                    </IconButton>
+                    </IconButton> */}
                     <Typography variant="subtitle1" color="inherit" component="div">
-                    VoiceR
+                    VoiceRecorder
                     </Typography>
                 </Toolbar>
             </AppBar>
             {/* Below is fake for layout */}
-            <Toolbar className={classes.hiddenBar}/>
+            <Toolbar className={classes.hiddenBar} variant="dense"/>
         </>
     )
 
